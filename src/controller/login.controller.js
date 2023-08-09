@@ -22,6 +22,10 @@ class LoginController {
       },
     };
   }
+
+  test(ctx, next) {
+    ctx.body = "验证身份通过～";
+  }
 }
 
 module.exports = new LoginController();
