@@ -19,6 +19,56 @@ class MomentController {
       data: result,
     };
   }
+
+  async list(ctx, next) {
+    // 获取分页参数
+    const { offset, size } = ctx.query;
+
+    // 从数据库获取moment列表数据
+    const result = await momentService.queryList(offset, size);
+
+    ctx.body = {
+      code: 0,
+      data: result,
+    };
+  }
+
+  async detail(ctx, next) {
+    const { momentId } = ctx.params;
+
+    const result = await momentService.detailById(momentId);
+
+    ctx.body = {
+      code: 0,
+      data: result[0],
+    };
+  }
+
+  async update(ctx, next) {
+    const { momentId } = ctx.params;
+
+    const { content } = ctx.request.body;
+
+    const result = await momentService.updateById(content, momentId);
+
+    ctx.body = {
+      code: 0,
+      message: "修改动态成功～",
+      data: result,
+    };
+  }
+
+  async remove(ctx, next) {
+    const { momentId } = ctx.params;
+
+    const result = await momentService.removeById(momentId);
+
+    ctx.body = {
+      code: 0,
+      message: "删除动态成功～",
+      data: result,
+    };
+  }
 }
 
 module.exports = new MomentController();
