@@ -1,0 +1,36 @@
+{
+  "code": 0,
+  "data": {
+    "id": 3,
+    "content": "test02发表的动态",
+    "createTime": "2023-08-10T15:30:06.000Z",
+    "updateTime": "2023-08-10T15:30:06.000Z",
+    "user": {
+      "id": 10,
+      "name": "test02",
+      "createTime": "2023-08-10 23:29:36.000000",
+      "updateTime": "2023-08-10 23:29:36.000000"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "user": { "id": 8, "name": "test" },
+        "content": "回复评论",
+        "commentId": null
+      },
+      {
+        "id": 2,
+        "user": { "id": 8, "name": "test" },
+        "content": "回复评论",
+        "commentId": null
+      },
+      {
+        "id": 3,
+        "user": { "id": 8, "name": "test" },
+        "content": "回复评论成功",
+        "commentId": 1
+      }
+    ],
+    "labels": [{ "id": null, "name": null }]
+  }
+}

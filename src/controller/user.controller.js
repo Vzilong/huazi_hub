@@ -1,4 +1,7 @@
+const fs = require("fs");
 const userService = require("../service/user.service");
+const { UPLOADS_PATH } = require("../config/path");
+const { queryAvatarByUserId } = require("../service/file.service");
 
 class UserController {
   async create(ctx, next) {
@@ -13,6 +16,17 @@ class UserController {
       message: "创建用户成功～",
       data: result,
     };
+  }
+
+  async showAvatar(ctx, next) {
+    const { userId } = ctx.params;
+
+    const result = await queryAvatarByUserId(userId);
+
+    const { filename, mimetype } = result;
+
+    ctx.type = mimetype;
+    ctx.body = fs.createReadStream(`${UPLOADS_PATH}/${filename}`);
   }
 }
 

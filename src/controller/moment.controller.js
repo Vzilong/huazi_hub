@@ -11,8 +11,6 @@ class MomentController {
     // 3.将动态相关信息添加到数据库
     const result = await momentService.create(content, id);
 
-    console.log(result);
-
     ctx.body = {
       code: 0,
       message: "创建用户动态成功～",
@@ -68,6 +66,33 @@ class MomentController {
       message: "删除动态成功～",
       data: result,
     };
+  }
+
+  async addLabels(ctx, next) {
+    const { labels } = ctx;
+    const { momentId } = ctx.params;
+
+    console.log(labels, momentId);
+
+    // 将moment_id和label_id添加到moment_label表中
+    try {
+      for (const label of labels) {
+        const isExists = await momentService.hasLabel(momentId, label.id);
+        if (isExists) continue;
+        const result = await momentService.addLabel(momentId, label.id);
+
+        ctx.body = {
+          code: 0,
+          message: "给动态添加标签成功",
+          data: result,
+        };
+      }
+    } catch (error) {
+      ctx.body = {
+        code: -3001,
+        message: "添加失败",
+      };
+    }
   }
 }
 
