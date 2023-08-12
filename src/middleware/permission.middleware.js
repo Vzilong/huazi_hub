@@ -1,12 +1,16 @@
 const { OPERATION_IS_NOT_ALLOWED } = require("../config/error");
-const { checkMoment } = require("../service/permission.service");
+const { checkResouce } = require("../service/permission.service");
 
-const verifyMomentPermission = async (ctx, next) => {
-  const { momentId } = ctx.params;
+const verifyPermission = async (ctx, next) => {
   const { id } = ctx.user;
 
+  // 获取动态params的参数key和value
+  const keyName = Object.keys(ctx.params)[0];
+  const resourceId = ctx.params[keyName];
+  const resourceName = keyName.replace("Id", "");
+
   // 查询是否有修改moment的权限
-  const isPermission = await checkMoment(momentId, id);
+  const isPermission = await checkResouce(resourceId, resourceName, id);
   if (!isPermission) {
     return ctx.app.emit("error", OPERATION_IS_NOT_ALLOWED, ctx);
   }
@@ -15,5 +19,5 @@ const verifyMomentPermission = async (ctx, next) => {
 };
 
 module.exports = {
-  verifyMomentPermission,
+  verifyPermission,
 };
